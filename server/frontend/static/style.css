@@ -124,3 +124,8 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+.vr {
+    border-left: 1px solid grey; /* Adjust thickness and color as needed */
+    height: 100%; /* Full height of the parent container */
+}
