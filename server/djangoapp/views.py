@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import CarMake, CarModel
 from .populate import initiate
-from server.djangoapp.restapis import get_request, analyze_review_sentiments, post_review
+from .restapis import get_request, analyze_review_sentiments, post_review
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ def logout_request(request):
 # @csrf_exempt
 @csrf_exempt
 def registration(request):
-    context = {} # pylint: disable=unused-variable
+    # context = {}  # pylint: disable=unused-variable
 
     data = json.loads(request.body)
     username = data['userName']
@@ -57,7 +57,7 @@ def registration(request):
     last_name = data['lastName']
     email = data['email']
     username_exist = False
-    email_exist = False # pylint: disable=unused-variable
+    # email_exist = False  # pylint: disable=unused-variable
     try:
         # Check if user already exists
         User.objects.get(username=username)
@@ -143,7 +143,7 @@ def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            # response = post_review(data)
             return JsonResponse({"status": 200})
         except Exception as e:
             print(f"Error: {e}")
