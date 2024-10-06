@@ -1,5 +1,5 @@
-# Uncomment the required imports before adding the code
-
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
 import json
 import logging
 
@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 
 # Create a `login_request` view to handle sign in request
+# Pylint: Missing function or method docstring
 @csrf_exempt
 def login_user(request):
     # Get username and password from request.POST dictionary
@@ -61,14 +62,17 @@ def registration(request):
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
+    except Exception as e:
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
+        print(f"Error: {e}")
 
     # If it is a new user
     if not username_exist:
         # Create user in auth_user table
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
+        user = User.objects.create_user(username=username,
+                                        first_name=first_name,
+                                        last_name=last_name,
                                         password=password, email=email)
         # Login the user and redirect to list page
         login(request, user)
@@ -135,7 +139,8 @@ def add_review(request):
         try:
             response = post_review(data)
             return JsonResponse({"status": 200})
-        except:
+        except Exception as e:
+            print(f"Error: {e}")
             return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})

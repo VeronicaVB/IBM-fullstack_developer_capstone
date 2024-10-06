@@ -1,5 +1,3 @@
-# Uncomment the following imports before adding the Model code
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -25,7 +23,8 @@ class CarMake(models.Model):
 
 
 class CarModel(models.Model):
-    # - Many-To-One relationship to Car Make model (One Car Make has many Car Models, using ForeignKey field)
+    # - Many-To-One relationship to Car Make model
+    # (One Car Make has many Car Models, using ForeignKey field)
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=200, choices=CAR_BODY_TYPE, default='SUV')

@@ -1,4 +1,3 @@
-# Uncomment the imports below before you add the function code
 import os
 
 import requests
@@ -26,9 +25,9 @@ def get_request(endpoint, **kwargs):
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
         return response.json()
-    except:
+    except requests.exceptions.RequestException as e:
         # If any error occurs
-        print("Network exception occurred")
+        print(f"Network exception occurred. {e}")
 
 
 def analyze_review_sentiments(text):
@@ -51,5 +50,5 @@ def post_review(data_dict):
         response = requests.post(request_url, json=data_dict)
         print(response.json())
         return response.json()
-    except:
-        print("Network exception occurred")
+    except requests.exceptions.RequestException as e:
+        print(f"Network exception occurred. {e}")
