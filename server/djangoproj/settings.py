@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# pylint: disable=line-too-long
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':

@@ -27,7 +27,9 @@ class CarModel(models.Model):
     # (One Car Make has many Car Models, using ForeignKey field)
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=200, choices=CAR_BODY_TYPE, default='SUV')
+    type = models.CharField(max_length=200,
+                            choices=CAR_BODY_TYPE,
+                            default='SUV')
     year = models.IntegerField(default=2023,
                                validators=[
                                    MaxValueValidator(2023),

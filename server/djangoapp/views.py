@@ -1,5 +1,6 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=missing-function-docstring
+# pylint: disable=unused-variable
 import json
 import logging
 
@@ -19,7 +20,6 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
-# Create a `login_request` view to handle sign in request
 # Pylint: Missing function or method docstring
 @csrf_exempt
 def login_user(request):
@@ -88,10 +88,13 @@ def get_cars(request):
     print(count)
     if count == 0:
         initiate()
-    car_models = CarModel.objects.select_related('car_make')
+    car_models = (CarModel
+                  .objects
+                  .select_related('car_make'))
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append({"CarModel": car_model.name,
+                     "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 
@@ -104,7 +107,8 @@ def get_dealerships(request, state="All"):
     else:
         endpoint = "/fetchDealers/" + state
     dealerships = get_request(endpoint)
-    return JsonResponse({"status": 200, "dealers": dealerships})
+    return JsonResponse({"status": 200,
+                         "dealers": dealerships})
 
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
