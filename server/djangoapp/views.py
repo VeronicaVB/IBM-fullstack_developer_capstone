@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import CarMake, CarModel
 from .populate import initiate
-from .restapis import get_request, analyze_review_sentiments, post_review
+from server.djangoapp.restapis import get_request, analyze_review_sentiments, post_review
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ def logout_request(request):
 # @csrf_exempt
 @csrf_exempt
 def registration(request):
-    context = {}
+    context = {} # pylint: disable=unused-variable
 
     data = json.loads(request.body)
     username = data['userName']
@@ -57,7 +57,7 @@ def registration(request):
     last_name = data['lastName']
     email = data['email']
     username_exist = False
-    email_exist = False
+    email_exist = False # pylint: disable=unused-variable
     try:
         # Check if user already exists
         User.objects.get(username=username)
@@ -131,9 +131,11 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request(endpoint)
-        return JsonResponse({"status": 200, "dealer": dealership})
+        return JsonResponse({"status": 200,
+                             "dealer": dealership})
     else:
-        return JsonResponse({"status": 400, "message": "Bad Request"})
+        return JsonResponse({"status": 400,
+                             "message": "Bad Request"})
 
 
 # Create a `add_review` view to submit a review
@@ -145,6 +147,8 @@ def add_review(request):
             return JsonResponse({"status": 200})
         except Exception as e:
             print(f"Error: {e}")
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse({"status": 401,
+                                 "message": "Error in posting review"})
     else:
-        return JsonResponse({"status": 403, "message": "Unauthorized"})
+        return JsonResponse({"status": 403,
+                             "message": "Unauthorized"})
